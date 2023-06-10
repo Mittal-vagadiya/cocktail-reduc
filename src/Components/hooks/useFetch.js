@@ -13,7 +13,7 @@ const useFetch = (url) => {
 
         FetchApiFromUrl(url)
             .then((res) => {
-                console.log('res2222222222222222', res)
+                console.log("res111111111111111", res)
                 setLoading(false);
                 setData(res);
             })

@@ -8,7 +8,8 @@ import './VideoSection.css'
 const VideosSection = ({ data, loading }) => {
     const [show, setShow] = useState(false);
     const [videoId, setVideoId] = useState(null);
-    
+    console.log('data', data)
+
     const skeleton = () => {
         return (
             <div className="skeletonItem">
@@ -22,48 +23,52 @@ const VideosSection = ({ data, loading }) => {
     };
     return (
         <>
-            <div className="sectionHeading">Official Videos</div>
-            <div className="videosSection">
-                <ContentWrapper>
-                    {!loading ? (
-                        <div className="videos">
-                            {data?.results?.map((video) => (
-                                <div
-                                    key={video.id}
-                                    className="videoItem"
-                                    onClick={() => {
-                                        setVideoId(video.key);
-                                        setShow(true);
-                                    }}
-                                >
-                                    <div className="videoThumbnail">
-                                        <Img
-                                            src={`https://img.youtube.com/vi/${video.key}/mqdefault.jpg`}
-                                        />
-                                        <PlayIcon />
-                                    </div>
-                                    <div className="videoTitle">{video.name}</div>
+            {data?.results?.length > 0 &&
+                <>
+                    <div className="sectionHeading">Official Videos</div>
+                    <div className="videosSection">
+                        <ContentWrapper>
+                            {!loading ? (
+                                <div className="videos">
+                                    {data?.results?.map((video) => (
+                                        <div
+                                            key={video.id}
+                                            className="videoItem"
+                                            onClick={() => {
+                                                setVideoId(video.key);
+                                                setShow(true);
+                                            }}
+                                        >
+                                            <div className="videoThumbnail">
+                                                <Img
+                                                    src={`https://img.youtube.com/vi/${video.key}/mqdefault.jpg`}
+                                                />
+                                                <PlayIcon />
+                                            </div>
+                                            <div className="">{video.name}</div>
+                                        </div>
+                                    ))}
                                 </div>
-                            ))}
-                        </div>
-                    ) : (
-                        <div className="castSkeleton">
-                        {skeleton()}
-                        {skeleton()}
-                        {skeleton()}
-                        {skeleton()}
-                        {skeleton()}
-                        {skeleton()}
+                            ) : (
+                                <div className="castSkeleton">
+                                    {skeleton()}
+                                    {skeleton()}
+                                    {skeleton()}
+                                    {skeleton()}
+                                    {skeleton()}
+                                    {skeleton()}
+                                </div>
+                            )}
+                        </ContentWrapper>
+                        <VideoPopup
+                            show={show}
+                            setShow={setShow}
+                            videoId={videoId}
+                            setVideoId={setVideoId}
+                        />
                     </div>
-                    )}
-                </ContentWrapper>
-                <VideoPopup
-                    show={show}
-                    setShow={setShow}
-                    videoId={videoId}
-                    setVideoId={setVideoId}
-                />
-            </div>
+                </>
+            }
         </>
     );
 };

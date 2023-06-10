@@ -16,20 +16,21 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-      fetchApiConfig();
-      genresCall()
-    }, []);
-    
-    const fetchApiConfig = () => {
-      FetchApiFromUrl('/configuration').then((res)=>{
+    fetchApiConfig();
+    genresCall()
+  }, []);
+
+  const fetchApiConfig = () => {
+    FetchApiFromUrl('/configuration').then((res) => {
       const url = {
-        backdrop: res.images.secure_base_url + "original",
-        poster: res.images.secure_base_url + "original",
-        profile: res.images.secure_base_url + "original",
-   }
-    dispatch(getApiConfiguration(url))}
+        backdrop: res?.images.secure_base_url + "original",
+        poster: res?.images.secure_base_url + "original",
+        profile: res?.images.secure_base_url + "original",
+      }
+      dispatch(getApiConfiguration(url))
+    }
     )
-  };  
+  };
 
   const genresCall = async () => {
     let promises = [];
@@ -37,7 +38,7 @@ function App() {
     let allGenres = {};
 
     endPoints.forEach((url) => {
-        promises.push(FetchApiFromUrl(`/genre/${url}/list`));
+      promises.push(FetchApiFromUrl(`/genre/${url}/list`));
     });
 
     const data = await Promise.all(promises);
@@ -45,20 +46,20 @@ function App() {
       return genres?.map((item) => (allGenres[item.id] = item));
     });
     dispatch(getGerns(allGenres));
-};
-return (
-  <div className="App">
-    <Header />
-    <Routes>
-      <Route path='/' element={<Home />} />
-      <Route path='/:mediaType/:id' element={<Details />} />
-      <Route path='/search/:query' element={<SearchResult />} />
-      <Route path='/explore/:mediaType' element={<Explore />} />
-      <Route path='*' element={<PageNotFound />} />
-    </Routes>
-    <Footer/>
-  </div>
-);
+  };
+  return (
+    <div className="App">
+      <Header />
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/:mediaType/:id' element={<Details />} />
+        <Route path='/search/:query' element={<SearchResult />} />
+        <Route path='/explore/:mediaType' element={<Explore />} />
+        <Route path='*' element={<PageNotFound />} />
+      </Routes>
+      <Footer />
+    </div>
+  );
 }
 
 export default App;

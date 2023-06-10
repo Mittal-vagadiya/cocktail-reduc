@@ -53,8 +53,8 @@ const SearchResult = () => {
                         <div className="pageTitle">
                             <div>
                                 {`Search ${data?.total_results > 1
-                                        ? "results"
-                                        : "result"
+                                    ? "results"
+                                    : "result"
                                     } of '${query}'`}
                             </div>
                         </div>

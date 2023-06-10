@@ -18,40 +18,45 @@ const Cast = ({ data, loading }) => {
     };
     return (
         <>
-            <div className="sectionHeading">Top Cast</div>
-            <div className="castSection">
-                <ContentWrapper>
-                    {!loading ? (
-                        <div className="listItems">
-                            {data?.map((item) => {
-                                let imgUrl = item.profile_path
-                                    ? url.profile + item.profile_path
-                                    : avatar;
-                                return (
-                                    <div key={item.id} className="listItem">
-                                        <div className="profileImg">
-                                            <img src={imgUrl} alt="avatAR"/>
-                                        </div>
-                                        <div className="name">{item.name}</div>
-                                        <div className="character">
-                                            {item.character}
-                                        </div>
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    ) : (
-                        <div className="castSkeleton">
-                            {skeleton()}
-                            {skeleton()}
-                            {skeleton()}
-                            {skeleton()}
-                            {skeleton()}
-                            {skeleton()}
-                        </div>
-                    )}
-                </ContentWrapper>
-            </div>
+            {
+                data?.length > 0 &&
+                <>
+                    <div className="sectionHeading">Top Cast</div>
+                    <div className="castSection">
+                        <ContentWrapper>
+                            {!loading ? (
+                                <div className="listItems">
+                                    {data?.map((item) => {
+                                        let imgUrl = item.profile_path
+                                            ? url.profile + item.profile_path
+                                            : avatar;
+                                        return (
+                                            <div key={item.id} className="listItem">
+                                                <div className="profileImg">
+                                                    <img src={imgUrl} alt="avatAR" />
+                                                </div>
+                                                <div className="name">{item.name}</div>
+                                                <div className="character">
+                                                    {item.character}
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            ) : (
+                                <div className="castSkeleton">
+                                    {skeleton()}
+                                    {skeleton()}
+                                    {skeleton()}
+                                    {skeleton()}
+                                    {skeleton()}
+                                    {skeleton()}
+                                </div>
+                            )}
+                        </ContentWrapper>
+                    </div>
+                </>
+            }
         </>
     );
 };
